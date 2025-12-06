@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{{.Title}}</title>
+</head>
+<body>
+<!--навигационное меню ну тип сверху будет ссылочки такие-->
+<nav>
+    <a href="/">Главная</a>
+    <a href="/modpacks">Сборки модов</a>
+    <a href="/versions">Моды</a>
+
+    {{if.User}}
+    <span>Привет, {{.User.Username}}!</span>
+    <a href="/profile">Профиль</a>
+    <a href="/logout">Выйти</a>
+    {{else}}
+    <a href="/login">Вход</a>
+    <a href="/register">Регистрация</a>
+    {{end}}
+</nav>
+
+
+<main>
+    {{template "content" .}}
+</main>
+
+
+<footer>
+    <p>Сделано для Lethal Company. Все права не защищены (нет) © 2017</p>
+</footer>
+</body>
+</html>

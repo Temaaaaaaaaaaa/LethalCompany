@@ -1,0 +1,62 @@
+{{define "content"}}
+<h1>Моды</h1>
+
+<!-- Фильтр по версии сборки -->
+<form method="get" action="/versions">
+    <label>Фильтр по версии сборки:</label>
+    <select name="version">
+        <option value="">Все</option>
+        {{range .Versions}}
+        <option value="{{.}}" {{if eq $.Filter .}}selected{{end}}>{{.}}</option>
+        {{end}}
+    </select>
+    <button type="submit">Применить фильтр</button>
+</form>
+
+<table border="1" cellpadding="5" cellspacing="0">
+    <thead>
+    <tr>
+        <th>Название мода</th>
+        <th>Описание</th>
+        <th>Версия сборки</th>
+        {{if .User}}
+            {{if eq .User.Role "админ"}}
+                <th>Действия</th>
+            {{end}}
+        {{end}}
+    </tr>
+    </thead>
+    <tbody>
+    {{range .Mods}}
+    <tr>
+        <td>{{.Name_mod}}</td>
+        <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{.Opisanye}}">
+            {{.Opisanye}}
+        </td>
+        <td>{{.Version}}</td>
+        {{if $.User}}
+            {{if eq $.User.Role "админ"}}
+                <td>
+                        <a href="/admin_mod_edit?id={{.ID}}">Редактировать</a>
+                    <a href="/admin_mod_delete?id={{.ID}}">Удалить</a>
+                </td>
+            {{end}}
+        {{end}}
+    </tr>
+    {{else}}
+    <tr>
+        <td colspan="3">Пока нет модов</td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+
+{{if .User}}
+{{if eq .User.Role "админ"}}
+<div>
+    <h3>Админ панель</h3>
+    <a href="/admin_modadd">Добавить мод</a>
+</div>
+{{end}}
+{{end}}
+{{end}}

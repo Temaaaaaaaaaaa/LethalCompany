@@ -1,0 +1,23 @@
+{{define "content"}}
+    <h1>Редактировать мод</h1>
+
+    <form method="POST">
+        <label>Название мода:</label><br>
+        <input type="text" name="name" value="{{.Mod.Name_mod}}" required><br><br>
+
+        <label>Описание:</label><br>
+        <textarea name="description" rows="4" cols="50" required>{{.Mod.Opisanye}}</textarea><br><br>
+
+        <label>Выберите версии сборок:</label><br>
+        {{range .ModPacks}}
+            <input type="checkbox" name="modpack_ids" value="{{.Version}}"
+                   {{if index $.SelectedVersions .Version}}checked{{end}} id="mp{{.ID}}">
+            <label for="mp{{.ID}}">{{.Version}} ({{.GameVersion}})</label><br>
+        {{else}}
+            <p>Пока нет сборок для выбора</p>
+        {{end}}
+        <br>
+
+        <button type="submit">Сохранить изменения</button>
+    </form>
+{{end}}

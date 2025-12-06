@@ -1,0 +1,50 @@
+{{define "content"}}
+
+<h1>Модовые сборки</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Версия сборки</th>
+        <th>Версия игры</th>
+        <th>Ссылка</th>
+        <th>Дата публикации</th>
+        <th>Действия</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{range .ModPacks}}
+    <tr>
+        <td>{{.Version}}</td>
+        <td>{{.GameVersion}}</td>
+        <td>
+            {{if $.User}} <!--берём из корневой системы потому что мы внутри range-->
+            <form action="{{.Description}}" method="get" target="_blank">
+                <button type="submit">Скачать</button>
+            </form>
+            {{else}}
+            <span>Авторизуйтесь</span>
+            {{end}}
+        </td>
+        <td>{{.PublishDate}}</td>
+
+        <td><a href="/versions?version={{.Version}}">Отдельные моды</a></td>
+
+    </tr>
+    {{else}}
+    <tr>
+        <td colspan="5">Пока нет сборок</td>
+    </tr>
+    {{end}}
+    </tbody>
+</table>
+
+{{if .User}}
+{{if eq .User.Role "админ"}} <!-- eq это сравнение (равно)-->
+<div>
+    <h3>Админ панель</h3>
+    <a href="/admin_modpack_create">Добавить сборку</a>
+</div>
+{{end}}
+{{end}}
+{{end}}

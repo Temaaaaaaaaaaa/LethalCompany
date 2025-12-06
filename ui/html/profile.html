@@ -1,0 +1,25 @@
+{{define "content"}}
+<h1>Профиль пользователя</h1>
+
+<div>
+    <p><strong>Имя пользователя:</strong> {{.User.Username}}</p>
+    <p><strong>Логин:</strong> {{.User.Login}}</p>
+    <p><strong>Роль:</strong> {{.User.Role}}</p>
+</div>
+
+<h2>История скачиваний</h2>
+<table border="1"> <!-- тут зачёркнуто потому что это типо ну устаревший html атрибут, но пофиг-->
+    <thead>
+    <tr>
+        <th>Сборка</th>
+        <th>Версия игры</th>
+        <th>Дата скачивания</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td colspan="3">в разработке</td>
+    </tr>
+    </tbody>
+</table>
+{{end}}
