@@ -12,9 +12,6 @@ import (
 	"golang.org/x/crypto/bcrypt" // для хеширования паролей
 )
 
-// Переменная для хранения сессии
-var sessions = map[string]*models.User{} //здесь ключ sessionID значение *modells.User
-
 // Функция для рендеринга страницы
 // baseFile -базовый шаблон и pageFile -дочерний шаблон
 func renderPage(w http.ResponseWriter, baseFile, pageFile string, data any) {
@@ -137,7 +134,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	// Создание сессии
 	sessionID := fmt.Sprintf("%d_%d", user.ID, time.Now().UnixNano()) //в нано секундах, что бы сессии были уникальными
 	sessions[sessionID] = &user                                       //сохраняем сессию
-	http.SetCookie(w, &http.Cookie{                                   // отправка браузеру куки
+	http.SetCookie(w, &http.Cookie{ // отправка браузеру куки
 		Name:     "session_id",                   // имя
 		Value:    sessionID,                      // индентификатор
 		Path:     "/",                            // доступен на всех страницах

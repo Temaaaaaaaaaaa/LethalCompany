@@ -5,6 +5,8 @@ import (
 	"net/http"
 )
 
+// Переменная для хранения сессии
+var sessions = map[string]*models.User{} //здесь ключ sessionID значение *modells.User
 // Получение текущего пользователя по cookie
 func getCurrentUser(r *http.Request) *models.User {
 	cookie, err := r.Cookie("session_id")
