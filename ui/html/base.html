@@ -14,14 +14,11 @@
 
 <body class="bg-dark text-light d-flex flex-column min-vh-100">
 
-<!-- 🌑 затемнение / туман -->
+
 <div class="overlay"></div>
 
-<!-- 💡 фонарик -->
 <div class="cursor-light"></div>
 
-
-<!-- ================= NAVBAR ================= -->
 <nav class="navbar navbar-expand-lg navbar-custom px-3 fixed-top">
 
     <a class="navbar-brand logo-text" href="/">
@@ -45,21 +42,19 @@
     </div>
 </nav>
 
-<!-- ================= CONTENT ================= -->
 <main class="main-content flex-grow-1">
     {{template "content" .}}
 </main>
-
-<!-- ================= FOOTER ================= -->
+>
 <footer class="text-center py-3 text-secondary mt-auto">
     <small>Сделано для Lethal Company. Все права не защищены (нет) © 2007</small>
 </footer>
-<!-- ================= SCRIPTS ================= -->
 
-<!-- Bootstrap -->
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- 💡 фонарик + 👁 пасхалка -->
+
 <script>
     document.addEventListener("DOMContentLoaded", () => {
 
