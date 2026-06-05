@@ -1,62 +1,125 @@
 {{define "content"}}
-<h1>Моды</h1>
 
-<!-- Фильтр по версии сборки -->
-<form method="get" action="/versions">
-    <label>Фильтр по версии сборки:</label>
-    <select name="version">
-        <option value="">Все</option>
-        {{range .Versions}}
-        <option value="{{.}}" {{if eq $.Filter .}}selected{{end}}>{{.}}</option>
-        {{end}}
-    </select>
-    <button type="submit">Применить фильтр</button>
-</form>
+    <div class="page-header text-center mb-5">
+        <h1 class="text-warning fw-bold">🔧 Моды</h1>
 
-<table border="1" cellpadding="5" cellspacing="0">
-    <thead>
-    <tr>
-        <th>Название мода</th>
-        <th>Описание</th>
-        <th>Версия сборки</th>
-        {{if .User}}
-            {{if eq .User.Role "админ"}}
-                <th>Действия</th>
-            {{end}}
+    </div>
+
+    <!-- ФИЛЬТР -->
+    <div class="glass-block p-4 mb-4">
+
+        <form method="get" action="/versions">
+
+            <div class="row align-items-end">
+
+                <div class="col-md-8">
+
+                    <label class="form-label text-warning">
+                        Версия сборки
+                    </label>
+
+                    <select name="version" class="form-select bg-dark text-light border-warning">
+
+                        <option value="">Все версии</option>
+
+                        {{range .Versions}}
+                            <option value="{{.}}" {{if eq $.Filter .}}selected{{end}}>
+                                {{.}}
+                            </option>
+                        {{end}}
+
+                    </select>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <button type="submit" class="btn btn-warning w-100">
+                        🔍 Применить фильтр
+                    </button>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- ТАБЛИЦА -->
+    <div class="glass-block">
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0 modpack-table">
+                <thead>
+                <tr>
+                    <th>Название мода</th>
+                    <th>Описание</th>
+                    <th>Версия сборки</th>
+                    {{if .User}}
+                        {{if eq .User.Role "админ"}}
+                            <th>Действия</th>
+                        {{end}}
+                    {{end}}
+                </tr>
+                </thead>
+                <tbody>
+                {{range .Mods}}
+                    <tr>
+                        <td class="fw-bold text-warning">
+                            {{.Name_mod}}
+                        </td>
+                        <td>
+                            <div class="mod-description"
+                                 title="{{.Opisanye}}">
+                                {{.Opisanye}}
+                            </div>
+                        </td>
+                        <td>
+                    <span class="badge bg-warning text-dark">
+                        {{.Version}}
+                    </span>
+                        </td>
+                        {{if $.User}}
+                            {{if eq $.User.Role "админ"}}
+                                <td>
+                                    <a href="/admin_mod_edit?id={{.ID}}"
+                                       class="btn btn-outline-warning btn-sm me-2">
+
+                                        ✏️
+                                    </a>
+                                    <a href="/admin_mod_delete?id={{.ID}}"
+                                       class="btn btn-outline-danger btn-sm">
+
+                                        🗑️
+                                    </a>
+                                </td>
+                            {{end}}
+                        {{end}}
+                    </tr>
+                {{else}}
+                    <tr>
+                        <td colspan="4"
+                            class="text-center py-4 text-secondary">
+                            Пока нет модов
+                        </td>
+                    </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {{if .User}}
+        {{if eq .User.Role "админ"}}
+            <div class="admin-panel mt-4">
+                <h3 class="text-warning mb-3">
+                    ⚙ Админ панель
+                </h3>
+                <a href="/admin_modadd"
+                   class="btn btn-warning">
+
+                    ➕ Добавить мод
+                </a>
+            </div>
         {{end}}
-    </tr>
-    </thead>
-    <tbody>
-    {{range .Mods}}
-    <tr>
-        <td>{{.Name_mod}}</td>
-        <td style="max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="{{.Opisanye}}">
-            {{.Opisanye}}
-        </td>
-        <td>{{.Version}}</td>
-        {{if $.User}}
-            {{if eq $.User.Role "админ"}}
-                <td>
-                        <a href="/admin_mod_edit?id={{.ID}}">Редактировать</a>
-                    <a href="/admin_mod_delete?id={{.ID}}">Удалить</a>
-                </td>
-            {{end}}
-        {{end}}
-    </tr>
-    {{else}}
-    <tr>
-        <td colspan="3">Пока нет модов</td>
-    </tr>
     {{end}}
-    </tbody>
-</table>
-
-{{if .User}}
-{{if eq .User.Role "админ"}}
-<div>
-    <h3>Админ панель</h3>
-    <a href="/admin_modadd">Добавить мод</a>
-</div>
-{{end}}
-{{end}}
 {{end}}

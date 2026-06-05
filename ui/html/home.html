@@ -1,17 +1,78 @@
 {{define "content"}}
-<h1>Добро пожаловать!</h1>
-<p>Сайт сделан как проект через язык Go</p>
-<p>Здесь вы найдете лучшие сборки модов и сможете скачать их для своей игры.</p>
 
-<div>
-    <h2>Быстрые ссылки:</h2>
-    <ul>
-        <li><a href="/modpacks">Сборки модов</a></li>
-        <li><a href="/versions">Версии сборок</a></li>
-        {{if.User}}
-        {{else}}
-        <li><a href="/register">Регистрация</a></li>
-        {{end}}
-    </ul>
-</div>
+    <div class="home-page">
+        <!-- HERO -->
+        <div class="p-5 mb-4 bg-dark bg-opacity-75 rounded-4 border border-warning">
+            <h1 class="display-5 text-warning fw-bold">
+                Добро пожаловать в Lethal Mods
+            </h1>
+            <p class="lead text-light mt-3">
+                Каталог сборок модов и расширений для Lethal Company.
+                Управление версиями, модами и сборками в одном месте.
+            </p>
+            <div class="mt-4">
+                <a href="/modpacks" class="btn btn-warning fw-bold me-2">
+                     Сборки модов
+                </a>
+                <a href="/versions" class="btn btn-outline-warning fw-bold">
+                     Моды
+                </a>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card bg-dark text-light border-warning h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning">⚡ Быстро</h5>
+                        <p class="card-text">
+                            Мгновенный доступ к модам и сборкам без лишних действий.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-dark text-light border-warning h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning">🛠 Удобно</h5>
+                        <p class="card-text">
+                            Фильтрация по версиям и простое управление контентом.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card bg-dark text-light border-warning h-100">
+                    <div class="card-body">
+                        <h5 class="card-title text-warning">🎮 Для игры</h5>
+                        <p class="card-text">
+                            Оптимизированные моды для комфортной игры в Lethal Company.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="mt-5 p-4 bg-dark bg-opacity-75 rounded-4 text-center border border-warning">
+            {{if .User}}
+                <h5 class="text-light">
+                    👤 Вы вошли как <span class="text-warning">{{.User.Username}}</span>
+                </h5>
+                <a href="/profile" class="btn btn-warning mt-3">
+                    Профиль
+                </a>
+            {{else}}
+                <h5 class="text-light">
+                     Войдите, чтобы получить полный доступ
+                </h5>
+                <a href="/login" class="btn btn-warning mt-3 me-2">
+                    Вход
+                </a>
+                <a href="/register" class="btn btn-outline-warning mt-3">
+                    Регистрация
+                </a>
+            {{end}}
+        </div>
+    </div>
 {{end}}

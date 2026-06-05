@@ -1,0 +1,402 @@
+/* =========================
+   ФОН
+========================= */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+
+    /* чуть светлее фон */
+    background: url("/static/img/1.jpg") no-repeat center center fixed;
+    background-size: cover;
+
+    overflow-x: hidden;
+    color: #fff;
+    opacity: 1;
+    transition:
+            opacity .5s ease,
+            transform .5s ease,
+            filter .5s ease;
+}
+body.fade-out {
+    opacity: 0;
+    transform: scale(0.2);
+    filter: blur(8px);
+}
+main {
+    padding-top: 100px;
+}
+.hero-block {
+    margin-top: 20px;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 110px; /* высота navbar */
+    padding-left: 20px;
+    padding-right: 20px;
+}
+/* =========================
+   МЯГКИЙ ЖИВОЙ ТУМАН
+========================= */
+
+.overlay {
+    position: fixed;
+    inset: 0;
+
+    /* светлее чем раньше */
+    background:
+            radial-gradient(circle at 20% 20%, rgba(255, 140, 0, 0.10), transparent 45%),
+            radial-gradient(circle at 80% 70%, rgba(255, 200, 120, 0.08), transparent 50%),
+            rgba(0, 0, 0, 0.35);
+
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* текстурный туман */
+.overlay::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+
+    background: url("https://www.transparenttextures.com/patterns/fog.png");
+
+    opacity: 0.06;
+    mix-blend-mode: screen;
+
+    animation: fogMove 25s linear infinite;
+}
+
+/* движение тумана */
+@keyframes fogMove {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-300px);
+    }
+}
+
+/* =========================
+   ЛЁГКИЙ ФОНАРИК МЫШИ
+========================= */
+
+.cursor-light {
+    position: fixed;
+
+    width: 450px;
+    height: 450px;
+
+    border-radius: 50%;
+    pointer-events: none;
+
+    background: radial-gradient(
+            circle,
+            rgba(255, 255, 255, 0.35) 0%,
+            rgba(255, 255, 255, 0.15) 30%,
+            rgba(255, 255, 255, 0.0) 70%
+    );
+
+    transform: translate(-50%, -50%);
+    z-index: 5;
+
+    mix-blend-mode: screen;
+}
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar-custom {
+    background: rgba(20, 20, 20, 0.75);
+    backdrop-filter: blur(12px);
+
+    border-bottom: 2px solid #ff8a1f;
+    box-shadow: 0 0 20px rgba(255, 140, 0, 0.25);
+}
+
+/* ссылки */
+.nav-item-custom {
+    color: #eaeaea !important;
+    margin: 0 8px;
+    font-weight: 500;
+    transition: 0.25s;
+}
+
+.nav-item-custom:hover {
+    color: #ff9a2e !important;
+    text-shadow: 0 0 10px #ff8a1f;
+    transform: translateY(-2px);
+}
+
+/* logout */
+.nav-item-custom.danger {
+    color: #ff5a5a !important;
+}
+
+.nav-item-custom.danger:hover {
+    color: #ff2e2e !important;
+    text-shadow: 0 0 10px #ff2e2e;
+}
+
+/* =========================
+   ЛОГО
+========================= */
+
+.logo-text {
+    font-size: 26px;
+    font-weight: 800;
+    letter-spacing: 2px;
+
+    color: #ff8a1f;
+    text-transform: uppercase;
+
+    text-shadow:
+            0 0 6px #ff8a1f,
+            0 0 14px rgba(255, 120, 0, 0.8);
+
+    transition: 0.3s;
+}
+
+.logo-text:hover {
+    transform: scale(1.05);
+    text-shadow:
+            0 0 10px #ff9a2e,
+            0 0 25px #ff7a00;
+}
+
+/* =========================
+   КОНТЕЙНЕРЫ
+========================= */
+
+
+
+/* стеклянные блоки */
+.bg-dark.bg-opacity-75 {
+    backdrop-filter: blur(10px);
+    border-radius: 16px !important;
+}
+
+/* =========================
+   КНОПКИ
+========================= */
+
+.btn-warning {
+    background: #ff8a1f;
+    border: none;
+    color: #000;
+}
+
+.btn-warning:hover {
+    background: #ffa045;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+}
+
+.btn-outline-warning {
+    border: 1px solid #ff8a1f;
+    color: #ff8a1f;
+}
+
+.btn-outline-warning:hover {
+    background: #ff8a1f;
+    color: #000;
+}
+
+/* =========================
+   КАРТОЧКИ
+========================= */
+
+.card {
+    transition: 0.25s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 25px rgba(255, 140, 0, 0.25);
+}
+
+/* =========================
+   FADE IN
+========================= */
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   GLASS BLOCK
+========================= */
+
+.glass-block {
+    background: rgba(15,15,15,0.75);
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,140,31,0.3);
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow:
+            0 0 25px rgba(255,140,31,0.12);
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.modpack-table {
+    margin: 0;
+}
+
+.modpack-table thead {
+    background: rgba(255,140,31,0.12);
+}
+
+.modpack-table th {
+    color: #ff9a2e;
+    border-color: rgba(255,140,31,0.2);
+    font-weight: 700;
+}
+
+.modpack-table td {
+    border-color: rgba(255,255,255,0.08);
+}
+
+.modpack-table tbody tr {
+    transition: .25s;
+}
+
+.modpack-table tbody tr:hover {
+    background: rgba(255,140,31,0.08);
+}
+
+/* =========================
+   PAGE TITLE
+========================= */
+
+.page-header h1 {
+    font-size: 42px;
+    text-shadow:
+            0 0 10px rgba(255,140,31,0.5);
+}
+
+/* =========================
+   ADMIN PANEL
+========================= */
+
+.admin-panel {
+    background: rgba(15,15,15,0.75);
+
+    border: 1px solid rgba(255,140,31,0.3);
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    backdrop-filter: blur(10px);
+}
+.mod-description {
+    max-width: 400px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    color: #d5d5d5;
+}
+
+.form-select {
+    background: rgba(20,20,20,0.8);
+}
+
+.form-select:focus {
+    border-color: #ff8a1f;
+    box-shadow: 0 0 10px rgba(255,140,31,0.4);
+}
+
+.badge {
+    font-size: 0.85rem;
+}
+/* =========================
+   AUTH
+========================= */
+
+.auth-container {
+    min-height: 70vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-card {
+
+    width: 100%;
+    max-width: 500px;
+
+    padding: 40px;
+
+    background: rgba(15,15,15,0.78);
+
+    backdrop-filter: blur(12px);
+
+    border: 1px solid rgba(255,140,31,0.3);
+
+    border-radius: 20px;
+
+    box-shadow:
+            0 0 30px rgba(255,140,31,0.15);
+}
+
+.auth-input {
+
+    background: rgba(25,25,25,0.9) !important;
+
+    color: #fff !important;
+
+    border: 1px solid rgba(255,140,31,0.25);
+}
+
+.auth-input:focus {
+
+    background: rgba(30,30,30,0.95) !important;
+
+    color: #fff !important;
+
+    border-color: #ff8a1f;
+
+    box-shadow:
+            0 0 10px rgba(255,140,31,0.35);
+}
+
+.auth-input::placeholder {
+    color: #888;
+}
+.form-check-input {
+    background-color: rgba(25,25,25,0.9);
+    border: 1px solid rgba(255,140,31,0.4);
+}
+
+.form-check-input:checked {
+    background-color: #ff8a1f;
+    border-color: #ff8a1f;
+}
+.form-check-input {
+    background-color: rgba(25,25,25,0.9);
+    border: 1px solid rgba(255,140,31,0.4);
+}
+
+.form-check-input:checked {
+    background-color: #ff8a1f;
+    border-color: #ff8a1f;
+}

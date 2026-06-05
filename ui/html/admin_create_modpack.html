@@ -1,16 +1,46 @@
 {{define "content"}}
-<h1>Добавить модпак</h1>
 
-<form method="POST">
-    <label>Версия сборки:</label><br>
-    <input type="text" name="version"><br><br>
-
-    <label>Версия игры:</label><br>
-    <input type="text" name="game_version"><br><br>
-
-    <label>Ссылка:</label><br>
-    <textarea name="description"></textarea><br><br>
-
-    <button type="submit">Сохранить</button>
-</form>
+    <div class="page-header text-center mb-5">
+        <h1 class="text-warning fw-bold">
+            📦 Добавить модпак
+        </h1>
+    </div>
+    <div class="glass-block p-4">
+        <form method="POST">
+            <div class="mb-3">
+                <label class="form-label text-secondary">
+                    Версия сборки
+                </label>
+                <input type="text"
+                       name="version"
+                       class="form-control auth-input"
+                       placeholder="например: 1.0.0"
+                       required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label text-secondary">
+                    Версия игры
+                </label>
+                <input type="text"
+                       name="game_version"
+                       class="form-control auth-input"
+                       placeholder="например: 0.9.8"
+                       required>
+            </div>
+            <div class="mb-4">
+                <label class="form-label text-secondary">
+                    Ссылка на модпак
+                </label>
+                <textarea name="description"
+                          rows="4"
+                          class="form-control auth-input"
+                          placeholder="https://drive.google.com / github / etc..."
+                          required></textarea>
+            </div>
+            <button type="submit"
+                    class="btn btn-warning w-100 fw-bold">
+                💾 Сохранить модпак
+            </button>
+        </form>
+    </div>
 {{end}}

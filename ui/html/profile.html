@@ -1,25 +1,60 @@
 {{define "content"}}
-<h1>Профиль пользователя</h1>
 
-<div>
-    <p><strong>Имя пользователя:</strong> {{.User.Username}}</p>
-    <p><strong>Логин:</strong> {{.User.Login}}</p>
-    <p><strong>Роль:</strong> {{.User.Role}}</p>
-</div>
+    <div class="page-header text-center mb-5">
+        <h1 class="text-warning fw-bold">
+            👤 Профиль пользователя
+        </h1>
+    </div>
+    <div class="glass-block p-4 mb-4">
 
-<h2>История скачиваний</h2>
-<table border="1"> <!-- тут зачёркнуто потому что это типо ну устаревший html атрибут, но пофиг-->
-    <thead>
-    <tr>
-        <th>Сборка</th>
-        <th>Версия игры</th>
-        <th>Дата скачивания</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td colspan="3">в разработке</td>
-    </tr>
-    </tbody>
-</table>
+        <div class="row">
+            <div class="col-md-4 text-secondary">
+                <strong>Имя пользователя:</strong>
+            </div>
+            <div class="col-md-8 text-light">
+                {{.User.Username}}
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-4 text-secondary">
+                <strong>Логин:</strong>
+            </div>
+            <div class="col-md-8 text-light">
+                {{.User.Login}}
+            </div>
+        </div>
+        <div class="row mt-2">
+            <div class="col-md-4 text-secondary">
+                <strong>Роль:</strong>
+            </div>
+            <div class="col-md-8">
+            <span class="badge bg-warning text-dark">
+                {{.User.Role}}
+            </span>
+            </div>
+        </div>
+    </div>
+    <div class="glass-block p-4">
+        <h3 class="text-warning mb-3">
+            📦 История скачиваний
+        </h3>
+        <div class="table-responsive">
+            <table class="table table-dark table-hover align-middle mb-0">
+                <thead>
+                <tr>
+                    <th>Сборка</th>
+                    <th>Версия игры</th>
+                    <th>Дата скачивания</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td colspan="3" class="text-center text-secondary py-4">
+                        В разработке
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 {{end}}

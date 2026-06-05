@@ -3,32 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <title>{{.Title}}</title>
-</head>
-<body>
-<!--навигационное меню ну тип сверху будет ссылочки такие-->
-<nav>
-    <a href="/">Главная</a>
-    <a href="/modpacks">Сборки модов</a>
-    <a href="/versions">Моды</a>
 
-    {{if.User}}
-    <span>Привет, {{.User.Username}}!</span>
-    <a href="/profile">Профиль</a>
-    <a href="/logout">Выйти</a>
-    {{else}}
-    <a href="/login">Вход</a>
-    <a href="/register">Регистрация</a>
-    {{end}}
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- твой стиль -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+<body class="bg-dark text-light d-flex flex-column min-vh-100">
+
+<!-- 🌑 затемнение / туман -->
+<div class="overlay"></div>
+
+<!-- 💡 фонарик -->
+<div class="cursor-light"></div>
+
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar navbar-expand-lg navbar-custom px-3 fixed-top">
+
+    <a class="navbar-brand logo-text" href="/">
+        Lethal Mods
+    </a>
+
+    <div class="navbar-nav ms-auto nav-links">
+
+        <a class="nav-link nav-item-custom" href="/">Главная</a>
+        <a class="nav-link nav-item-custom" href="/modpacks">Сборки</a>
+        <a class="nav-link nav-item-custom" href="/versions">Моды</a>
+
+        {{if .User}}
+            <a class="nav-link nav-item-custom" href="/profile">Профиль</a>
+            <a class="nav-link nav-item-custom danger" href="/logout">Выйти</a>
+        {{else}}
+            <a class="nav-link nav-item-custom" href="/login">Вход</a>
+            <a class="nav-link nav-item-custom" href="/register">Регистрация</a>
+        {{end}}
+
+    </div>
 </nav>
 
-
-<main>
+<!-- ================= CONTENT ================= -->
+<main class="main-content flex-grow-1">
     {{template "content" .}}
 </main>
 
-
-<footer>
-    <p>Сделано для Lethal Company. Все права не защищены (нет) © 2017</p>
+<!-- ================= FOOTER ================= -->
+<footer class="text-center py-3 text-secondary mt-auto">
+    <small>Сделано для Lethal Company. Все права не защищены (нет) © 2007</small>
 </footer>
+<!-- ================= SCRIPTS ================= -->
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- 💡 фонарик + 👁 пасхалка -->
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+
+        const light = document.querySelector(".cursor-light");
+        const easter = document.querySelector(".easter-egg");
+
+        document.addEventListener("mousemove", (e) => {
+
+            // фонарик
+            light.style.left = e.clientX + "px";
+            light.style.top = e.clientY + "px";
+
+            // центр пасхалки
+            const rect = easter.getBoundingClientRect();
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top + rect.height / 2;
+
+            const dx = e.clientX - cx;
+            const dy = e.clientY - cy;
+
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            // радиус видимости
+            if (distance < 160) {
+                easter.classList.add("visible");
+            } else {
+                easter.classList.remove("visible");
+            }
+        });
+
+    });
+</script>
+<script>
+    document.querySelectorAll("a").forEach(link => {
+
+        if (
+            link.target === "_blank" ||
+            link.href.startsWith("javascript:")
+        ) return;
+
+        link.addEventListener("click", function(e) {
+
+            const url = this.href;
+
+            if (!url) return;
+
+            e.preventDefault();
+
+            document.body.classList.add("fade-out");
+
+            setTimeout(() => {
+                window.location.href = url;
+            }, 250);
+
+        });
+
+    });
+</script>
 </body>
 </html>

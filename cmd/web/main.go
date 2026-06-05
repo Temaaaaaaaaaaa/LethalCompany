@@ -13,6 +13,8 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fs := http.FileServer(http.Dir("ui/static"))
+	http.Handle("/static/", http.StripPrefix("/static/", fs))
 
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/register", handlers.RegisterHandler)
