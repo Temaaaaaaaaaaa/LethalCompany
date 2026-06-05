@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"lethalcompany/internal/database"
 	"lethalcompany/internal/handlers"
+	"log"
 	"net/http"
 )
 
 func main() {
-
-	database.Connect()
+	err := database.InitDB()
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	http.HandleFunc("/", handlers.HomeHandler)
 	http.HandleFunc("/register", handlers.RegisterHandler)
@@ -24,10 +27,5 @@ func main() {
 	http.HandleFunc("/admin_mod_delete", handlers.DeleteModHandler)
 
 	fmt.Println("Сервер запущен на http://localhost:8080")
-
-	err := http.ListenAndServe(":8080", nil)
-	if err != nil {
-		fmt.Println("Ошибка запуска сервера:", err)
-
-	}
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
