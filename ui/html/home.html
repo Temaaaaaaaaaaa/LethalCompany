@@ -8,7 +8,10 @@
     <ul>
         <li><a href="/modpacks">Сборки модов</a></li>
         <li><a href="/versions">Версии сборок</a></li>
+        {{if.User}}
+        {{else}}
         <li><a href="/register">Регистрация</a></li>
+        {{end}}
     </ul>
 </div>
 {{end}}
