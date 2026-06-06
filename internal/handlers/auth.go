@@ -39,7 +39,7 @@ func HomeHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // регистрация
-func RegisterHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 
@@ -70,7 +70,7 @@ func RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	exists, err := database.UserExists(login)
+	exists, err := h.db.UserExists(login)
 	if err != nil {
 		http.Error(w, "Ошибка сервера", http.StatusInternalServerError)
 		return

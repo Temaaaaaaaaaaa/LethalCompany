@@ -7,6 +7,31 @@ import (
 	_ "github.com/lib/pq"
 )
 
+type Database struct {
+	db *sql.DB
+}
+
+func New() (*Database, error) {
+	connStr := fmt.Sprintf(
+		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname,
+	)
+
+	db, err := sql.Open("postgres", connStr)
+	if err != nil {
+		return nil, err
+	}
+
+	err = db.Ping()
+	if err != nil {
+		return nil, err
+	}
+
+	fmt.Println("Успешное подключение к базе данных!")
+
+	return &Database{db: db}, nil
+}
+
 const (
 	host     = "localhost"
 	port     = 5432
@@ -18,23 +43,6 @@ const (
 var DB *sql.DB
 
 func InitDB() error {
-
-	connStr := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname,
-	)
-
-	db, err := sql.Open("postgres", connStr)
-	if err != nil {
-		return err
-	}
-
-	err = db.Ping()
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("Успешное подключение к базе данных!")
 
 	DB = db
 	return nil

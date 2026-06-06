@@ -5,8 +5,7 @@ import (
 )
 
 // проверка существует ли пользователь
-func UserExists(login string) (bool, error) {
-	db := DB
+func (db *Database) UserExists(login string) (bool, error) {
 	var exists bool
 	err := db.QueryRow(`
 		SELECT EXISTS(
