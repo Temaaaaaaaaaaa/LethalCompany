@@ -1,6 +1,3 @@
-/* =========================
-   ФОН
-========================= */
 
 body {
     margin: 0;
@@ -37,15 +34,12 @@ main {
     padding-left: 20px;
     padding-right: 20px;
 }
-/* =========================
-   МЯГКИЙ ЖИВОЙ ТУМАН
-========================= */
+
 
 .overlay {
     position: fixed;
     inset: 0;
 
-    /* светлее чем раньше */
     background:
             radial-gradient(circle at 20% 20%, rgba(255, 140, 0, 0.10), transparent 45%),
             radial-gradient(circle at 80% 70%, rgba(255, 200, 120, 0.08), transparent 50%),
@@ -79,9 +73,6 @@ main {
     }
 }
 
-/* =========================
-   ЛЁГКИЙ ФОНАРИК МЫШИ
-========================= */
 
 .cursor-light {
     position: fixed;
@@ -104,9 +95,7 @@ main {
 
     mix-blend-mode: screen;
 }
-/* =========================
-   NAVBAR
-========================= */
+
 
 .navbar-custom {
     background: rgba(20, 20, 20, 0.75);
@@ -116,7 +105,6 @@ main {
     box-shadow: 0 0 20px rgba(255, 140, 0, 0.25);
 }
 
-/* ссылки */
 .nav-item-custom {
     color: #eaeaea !important;
     margin: 0 8px;
@@ -130,7 +118,7 @@ main {
     transform: translateY(-2px);
 }
 
-/* logout */
+
 .nav-item-custom.danger {
     color: #ff5a5a !important;
 }
@@ -140,9 +128,7 @@ main {
     text-shadow: 0 0 10px #ff2e2e;
 }
 
-/* =========================
-   ЛОГО
-========================= */
+
 
 .logo-text {
     font-size: 26px;
@@ -166,9 +152,6 @@ main {
             0 0 25px #ff7a00;
 }
 
-/* =========================
-   КОНТЕЙНЕРЫ
-========================= */
 
 
 
@@ -178,9 +161,6 @@ main {
     border-radius: 16px !important;
 }
 
-/* =========================
-   КНОПКИ
-========================= */
 
 .btn-warning {
     background: #ff8a1f;
@@ -203,9 +183,6 @@ main {
     color: #000;
 }
 
-/* =========================
-   КАРТОЧКИ
-========================= */
 
 .card {
     transition: 0.25s;
@@ -216,9 +193,6 @@ main {
     box-shadow: 0 0 25px rgba(255, 140, 0, 0.25);
 }
 
-/* =========================
-   FADE IN
-========================= */
 
 @keyframes fadeIn {
     from {
@@ -231,9 +205,7 @@ main {
     }
 }
 
-/* =========================
-   GLASS BLOCK
-========================= */
+
 
 .glass-block {
     background: rgba(15,15,15,0.75);
@@ -250,9 +222,7 @@ main {
             0 0 25px rgba(255,140,31,0.12);
 }
 
-/* =========================
-   TABLE
-========================= */
+
 
 .modpack-table {
     margin: 0;
@@ -280,9 +250,6 @@ main {
     background: rgba(255,140,31,0.08);
 }
 
-/* =========================
-   PAGE TITLE
-========================= */
 
 .page-header h1 {
     font-size: 42px;
@@ -290,9 +257,7 @@ main {
             0 0 10px rgba(255,140,31,0.5);
 }
 
-/* =========================
-   ADMIN PANEL
-========================= */
+
 
 .admin-panel {
     background: rgba(15,15,15,0.75);
@@ -327,9 +292,7 @@ main {
 .badge {
     font-size: 0.85rem;
 }
-/* =========================
-   AUTH
-========================= */
+
 
 .auth-container {
     min-height: 70vh;
