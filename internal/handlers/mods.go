@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"lethalcompany/internal/database"
 	"lethalcompany/internal/models"
 	"net/http"
 	"strconv"
@@ -9,17 +8,17 @@ import (
 )
 
 // список модов
-func ModsHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) ModsHandler(w http.ResponseWriter, r *http.Request) {
 
 	versionFilter := r.URL.Query().Get("version")
 
-	versions, err := database.GetAllVersions()
+	versions, err := h.DB.GetAllVersions()
 	if err != nil {
 		http.Error(w, "Ошибка получения версий: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	mods, err := database.GetMods(versionFilter)
+	mods, err := h.DB.GetMods(versionFilter)
 	if err != nil {
 		http.Error(w, "Ошибка получения модов: "+err.Error(), http.StatusInternalServerError)
 		return
@@ -39,15 +38,15 @@ func ModsHandler(w http.ResponseWriter, r *http.Request) {
 		Filter:   versionFilter,
 	}
 
-	renderPage(w, "ui/html/base.html", "ui/html/versions.html", data)
+	h.renderPage(w, "ui/html/base.html", "ui/html/versions.html", data)
 }
 
 // добавление мода
-func Add_modHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) Add_modHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 
-		modpacks, err := database.GetAllModpacks()
+		modpacks, err := h.DB.GetAllModpacks()
 		if err != nil {
 			http.Error(w, "Ошибка получения сборок: "+err.Error(), http.StatusInternalServerError)
 			return
@@ -63,7 +62,7 @@ func Add_modHandler(w http.ResponseWriter, r *http.Request) {
 			ModPacks: modpacks,
 		}
 
-		renderPage(w, "ui/html/base.html", "ui/html/add_mod.html", data)
+		h.renderPage(w, "ui/html/base.html", "ui/html/add_mod.html", data)
 		return
 	}
 
@@ -85,7 +84,7 @@ func Add_modHandler(w http.ResponseWriter, r *http.Request) {
 
 	for _, idStr := range modpackIDs {
 
-		version, err := database.GetVersionByModpackID(idStr)
+		version, err := h.DB.GetVersionByModpackID(idStr)
 		if err != nil {
 			continue
 		}
@@ -95,7 +94,7 @@ func Add_modHandler(w http.ResponseWriter, r *http.Request) {
 
 	versionsStr := strings.Join(versions, ", ")
 
-	err := database.AddMod(
+	err := h.DB.AddMod(
 		name,
 		description,
 		versionsStr,
@@ -110,7 +109,7 @@ func Add_modHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // редактирование мода
-func EditModHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) EditModHandler(w http.ResponseWriter, r *http.Request) {
 
 	idStr := r.URL.Query().Get("id")
 
@@ -127,13 +126,13 @@ func EditModHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 
-		mod, err := database.GetModByID(id)
+		mod, err := h.DB.GetModByID(id)
 		if err != nil {
 			http.Error(w, "Мод не найден", http.StatusNotFound)
 			return
 		}
 
-		modpacks, err := database.GetAllModpacks()
+		modpacks, err := h.DB.GetAllModpacks()
 		if err != nil {
 			http.Error(w, "Ошибка получения сборок", http.StatusInternalServerError)
 			return
@@ -159,7 +158,7 @@ func EditModHandler(w http.ResponseWriter, r *http.Request) {
 			SelectedVersions: selectedVersions,
 		}
 
-		renderPage(w, "ui/html/base.html", "ui/html/edit_mod.html", data)
+		h.renderPage(w, "ui/html/base.html", "ui/html/edit_mod.html", data)
 		return
 	}
 
@@ -179,7 +178,7 @@ func EditModHandler(w http.ResponseWriter, r *http.Request) {
 
 	versionStr := strings.Join(selectedVersions, ", ")
 
-	err = database.UpdateMod(
+	err = h.DB.UpdateMod(
 		id,
 		name,
 		description,
@@ -195,7 +194,7 @@ func EditModHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // удаление мода
-func DeleteModHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) DeleteModHandler(w http.ResponseWriter, r *http.Request) {
 
 	idStr := r.URL.Query().Get("id")
 
@@ -210,7 +209,7 @@ func DeleteModHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = database.DeleteMod(id)
+	err = h.DB.DeleteMod(id)
 	if err != nil {
 		http.Error(w, "Ошибка удаления мода: "+err.Error(), http.StatusInternalServerError)
 		return

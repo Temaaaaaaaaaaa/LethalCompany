@@ -4,11 +4,9 @@ import (
 	"lethalcompany/internal/models"
 )
 
-func CreateModpack(version, gameVersion, description string) error {
+func (db *Database) CreateModpack(version, gameVersion, description string) error {
 
-	db := DB
-
-	_, err := db.Exec(`
+	_, err := db.DB.Exec(`
 		INSERT INTO "сборка_мода"
 		(версия_сборки, версия_игры, ссылка, дата_публикации)
 		VALUES ($1, $2, $3, NOW())
@@ -20,10 +18,9 @@ func CreateModpack(version, gameVersion, description string) error {
 
 	return err
 }
-func GetAllVersions() ([]string, error) {
-	db := DB
+func (db *Database) GetAllVersions() ([]string, error) {
 
-	rows, err := db.Query(`
+	rows, err := db.DB.Query(`
 		SELECT DISTINCT "версия_сборки"
 		FROM "сборка_мода"
 		ORDER BY "версия_сборки"
@@ -50,10 +47,9 @@ func GetAllVersions() ([]string, error) {
 	return versions, nil
 }
 
-func GetAllModpacks() ([]models.ModPack, error) {
-	db := DB
+func (db *Database) GetAllModpacks() ([]models.ModPack, error) {
 
-	rows, err := db.Query(`
+	rows, err := db.DB.Query(`
 		SELECT id_сборки,
 		       версия_сборки,
 		       версия_игры,
@@ -90,12 +86,11 @@ func GetAllModpacks() ([]models.ModPack, error) {
 	return modpacks, nil
 }
 
-func GetVersionByModpackID(id string) (string, error) {
-	db := DB
+func (db *Database) GetVersionByModpackID(id string) (string, error) {
 
 	var version string
 
-	err := db.QueryRow(
+	err := db.DB.QueryRow(
 		`SELECT версия_сборки
 		 FROM "сборка_мода"
 		 WHERE id_сборки=$1`,

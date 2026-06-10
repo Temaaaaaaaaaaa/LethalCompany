@@ -5,9 +5,7 @@ import (
 )
 
 // список модов
-func GetMods(versionFilter string) ([]models.Mods, error) {
-
-	db := DB
+func (db *Database) GetMods(versionFilter string) ([]models.Mods, error) {
 
 	var query string
 	var args []interface{}
@@ -24,7 +22,7 @@ func GetMods(versionFilter string) ([]models.Mods, error) {
 		         ORDER BY "id"`
 	}
 
-	rows, err := db.Query(query, args...)
+	rows, err := db.DB.Query(query, args...)
 	if err != nil {
 		return nil, err
 	}
@@ -53,13 +51,11 @@ func GetMods(versionFilter string) ([]models.Mods, error) {
 }
 
 // мод по ID
-func GetModByID(id int) (models.Mods, error) {
-
-	db := DB
+func (db *Database) GetModByID(id int) (models.Mods, error) {
 
 	var mod models.Mods
 
-	err := db.QueryRow(`
+	err := db.DB.QueryRow(`
 		SELECT "id","название_мода","описание","версия_сборки"
 		FROM "моды"
 		WHERE "id"=$1
@@ -74,11 +70,9 @@ func GetModByID(id int) (models.Mods, error) {
 }
 
 // добавление
-func AddMod(name, description, versions string) error {
+func (db *Database) AddMod(name, description, versions string) error {
 
-	db := DB
-
-	_, err := db.Exec(`
+	_, err := db.DB.Exec(`
 		INSERT INTO "моды"
 		("название_мода","описание","версия_сборки")
 		VALUES ($1,$2,$3)
@@ -88,11 +82,9 @@ func AddMod(name, description, versions string) error {
 }
 
 // обновление
-func UpdateMod(id int, name, description, versions string) error {
+func (db *Database) UpdateMod(id int, name, description, versions string) error {
 
-	db := DB
-
-	_, err := db.Exec(`
+	_, err := db.DB.Exec(`
 		UPDATE "моды"
 		SET "название_мода"=$1,
 		    "описание"=$2,
@@ -104,11 +96,9 @@ func UpdateMod(id int, name, description, versions string) error {
 }
 
 // удаление
-func DeleteMod(id int) error {
+func (db *Database) DeleteMod(id int) error {
 
-	db := DB
-
-	_, err := db.Exec(`
+	_, err := db.DB.Exec(`
 		DELETE FROM "моды"
 		WHERE "id"=$1
 	`, id)

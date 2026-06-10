@@ -3,7 +3,6 @@ package handlers
 import (
 	"fmt"
 	"html/template"
-	"lethalcompany/internal/database"
 	"lethalcompany/internal/models"
 	"net/http"
 	"strings"
@@ -13,7 +12,7 @@ import (
 )
 
 // renderPage — рендер HTML
-func renderPage(w http.ResponseWriter, baseFile, pageFile string, data any) {
+func (h *Header) renderPage(w http.ResponseWriter, baseFile, pageFile string, data any) {
 	tmpl := template.Must(template.ParseFiles(baseFile, pageFile))
 	err := tmpl.ExecuteTemplate(w, "base.html", data)
 	if err != nil {
@@ -28,14 +27,14 @@ type PageData struct {
 }
 
 // главная
-func HomeHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) HomeHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := PageData{
 		Title: "Главная",
 		User:  getCurrentUser(r),
 	}
 
-	renderPage(w, "ui/html/base.html", "ui/html/home.html", data)
+	h.renderPage(w, "ui/html/base.html", "ui/html/home.html", data)
 }
 
 // регистрация
@@ -48,7 +47,7 @@ func (h *Header) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 			User:  getCurrentUser(r),
 		}
 
-		renderPage(w, "ui/html/base.html", "ui/html/register.html", data)
+		h.renderPage(w, "ui/html/base.html", "ui/html/register.html", data)
 		return
 	}
 
@@ -70,7 +69,7 @@ func (h *Header) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	exists, err := h.db.UserExists(login)
+	exists, err := h.DB.UserExists(login)
 	if err != nil {
 		http.Error(w, "Ошибка сервера", http.StatusInternalServerError)
 		return
@@ -81,7 +80,7 @@ func (h *Header) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	err = database.CreateUser(username, login, string(hash))
+	err = h.DB.CreateUser(username, login, string(hash))
 	if err != nil {
 		http.Error(w, "Ошибка регистрации", http.StatusInternalServerError)
 		return
@@ -91,7 +90,7 @@ func (h *Header) RegisterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // вход
-func LoginHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) LoginHandler(w http.ResponseWriter, r *http.Request) {
 
 	if r.Method == "GET" {
 
@@ -100,7 +99,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 			User:  getCurrentUser(r),
 		}
 
-		renderPage(w, "ui/html/base.html", "ui/html/login.html", data)
+		h.renderPage(w, "ui/html/base.html", "ui/html/login.html", data)
 		return
 	}
 
@@ -109,7 +108,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 	login := strings.TrimSpace(r.FormValue("login"))
 	password := r.FormValue("password")
 
-	user, err := database.GetUserByLogin(login)
+	user, err := h.DB.GetUserByLogin(login)
 	if err != nil {
 		http.Error(w, "Пользователь не найден", http.StatusUnauthorized)
 		return
@@ -141,7 +140,7 @@ func LoginHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // выход
-func LogoutHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) LogoutHandler(w http.ResponseWriter, r *http.Request) {
 
 	cookie, err := r.Cookie("session_id")
 
@@ -156,12 +155,12 @@ func LogoutHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // профиль
-func ProfileHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) ProfileHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := PageData{
 		Title: "Профиль",
 		User:  getCurrentUser(r),
 	}
 
-	renderPage(w, "ui/html/base.html", "ui/html/profile.html", data)
+	h.renderPage(w, "ui/html/base.html", "ui/html/profile.html", data)
 }

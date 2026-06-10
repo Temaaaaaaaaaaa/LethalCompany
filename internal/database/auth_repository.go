@@ -7,7 +7,7 @@ import (
 // проверка существует ли пользователь
 func (db *Database) UserExists(login string) (bool, error) {
 	var exists bool
-	err := db.QueryRow(`
+	err := db.DB.QueryRow(`
 		SELECT EXISTS(
 			SELECT 1
 			FROM "пользователи"
@@ -19,11 +19,9 @@ func (db *Database) UserExists(login string) (bool, error) {
 }
 
 // создание пользователя
-func CreateUser(username, login, passwordHash string) error {
+func (db *Database) CreateUser(username, login, passwordHash string) error {
 
-	db := DB
-
-	_, err := db.Exec(`
+	_, err := db.DB.Exec(`
 		INSERT INTO "пользователи"
 		("имя_пользователя","логин","паролик","роль")
 		VALUES ($1,$2,$3,$4)
@@ -38,13 +36,11 @@ func CreateUser(username, login, passwordHash string) error {
 }
 
 // получить пользователя по логину
-func GetUserByLogin(login string) (models.User, error) {
-
-	db := DB
+func (db Database) GetUserByLogin(login string) (models.User, error) {
 
 	var user models.User
 
-	err := db.QueryRow(`
+	err := db.DB.QueryRow(`
 		SELECT
 			"id_пользователя",
 			"имя_пользователя",

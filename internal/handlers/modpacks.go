@@ -1,15 +1,14 @@
 package handlers
 
 import (
-	"lethalcompany/internal/database"
 	"lethalcompany/internal/models"
 	"net/http"
 )
 
 // список сборок
-func ModPacksHandler(w http.ResponseWriter, r *http.Request) {
+func (h *Header) ModPacksHandler(w http.ResponseWriter, r *http.Request) {
 
-	modpacks, err := database.GetAllModpacks()
+	modpacks, err := h.DB.GetAllModpacks()
 
 	if err != nil {
 		http.Error(
@@ -30,7 +29,7 @@ func ModPacksHandler(w http.ResponseWriter, r *http.Request) {
 		ModPacks: modpacks,
 	}
 
-	renderPage(
+	h.renderPage(
 		w,
 		"ui/html/base.html",
 		"ui/html/modpacks.html",
@@ -39,7 +38,7 @@ func ModPacksHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 // форма добавления сборки
-func AdminCreateModPackHandler(
+func (h *Header) AdminCreateModPackHandler(
 	w http.ResponseWriter,
 	r *http.Request,
 ) {
@@ -51,7 +50,7 @@ func AdminCreateModPackHandler(
 			User:  getCurrentUser(r),
 		}
 
-		renderPage(
+		h.renderPage(
 			w,
 			"ui/html/base.html",
 			"ui/html/admin_create_modpack.html",
@@ -78,7 +77,7 @@ func AdminCreateModPackHandler(
 	gameVersion := r.FormValue("game_version")
 	description := r.FormValue("description")
 
-	err = database.CreateModpack(
+	err = h.DB.CreateModpack(
 		version,
 		gameVersion,
 		description,

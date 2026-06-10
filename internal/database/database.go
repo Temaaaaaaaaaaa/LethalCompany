@@ -3,18 +3,19 @@ package database
 import (
 	"database/sql"
 	"fmt"
+	"os"
 
 	_ "github.com/lib/pq"
 )
 
 type Database struct {
-	db *sql.DB
+	DB *sql.DB
 }
 
 func New() (*Database, error) {
 	connStr := fmt.Sprintf(
-		"host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-		host, port, user, password, dbname,
+		"host=%s port=%s user=%s password=%s dbname=%s sslmode=disable",
+		os.Getenv("host"), os.Getenv("port"), os.Getenv("user"), os.Getenv("password"), os.Getenv("dbname"),
 	)
 
 	db, err := sql.Open("postgres", connStr)
@@ -29,21 +30,5 @@ func New() (*Database, error) {
 
 	fmt.Println("Успешное подключение к базе данных!")
 
-	return &Database{db: db}, nil
-}
-
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "864250"
-	dbname   = "lethalcompany"
-)
-
-var DB *sql.DB
-
-func InitDB() error {
-
-	DB = db
-	return nil
+	return &Database{DB: db}, nil
 }
